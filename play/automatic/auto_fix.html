@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Fix Inequality</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="500"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="220"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+				<div class="btn" id="view_toggle" onclick="toggleView()">&#x2630; bars</div>
+				<div class="btn" id="sort_toggle" onclick="toggleSort()">&#x2195; fixed</div>
+			</div>
+			<div class="view-hint">try: &#x2630; bars or &#x2195; sorted to see the distribution differently</div>
+			<div id="controls">
+				<div class="slider-row">
+					<label>Poorer loses:</label>
+					<input type="range" id="sl_lose" min="0.1" max="30" value="16.67" step="0.1" oninput="updateLose()">
+					<input class="val" id="val_lose" value="16.67%" onchange="typedLose()" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row" style="color:#777; font-size:12px;">
+					<label></label>
+					<span>Richer always pays: <b style="color:#ddd">20%</b> of the poorer's wealth on heads</span>
+				</div>
+			</div>
+			<div id="info_text" style="margin-top:12px">
+				What if we <b style="color:#ddd">reduce</b> how much the poorer person loses on tails?<br>
+				Try lowering the loss fraction...
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 50 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>
+<script>
+SPEED = 300;
+
+function fmtNum(n) {
+	if (n === Math.floor(n)) return n.toFixed(0);
+	var s = n.toFixed(4);
+	return s.replace(/0+$/, "").replace(/\.$/, "");
+}
+
+function updateLose() {
+	LOSE_FRACTION = parseFloat(document.getElementById("sl_lose").value) / 100;
+	document.getElementById("val_lose").value = fmtNum(LOSE_FRACTION * 100) + "%";
+}
+
+function typedLose() {
+	var num = parseFloat(document.getElementById("val_lose").value);
+	if (isNaN(num)) { updateLose(); return; }
+	num = Math.max(0.01, Math.min(50, num));
+	LOSE_FRACTION = num / 100;
+	document.getElementById("sl_lose").value = num;
+	document.getElementById("val_lose").value = fmtNum(num) + "%";
+}
+</script>

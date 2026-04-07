@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Two Person Auto</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="400"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="280"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+			</div>
+			<div id="info_text" style="margin-top:12px">
+				Each flip: the stake is based on the <b style="color:#ddd">poorer</b> person's wealth.<br>
+				Heads: richer pays 20%. Tails: poorer pays 16.67%.
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 2 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>

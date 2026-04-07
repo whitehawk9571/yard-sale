@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Multi Person</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="500"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="280"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+				<div class="btn" id="view_toggle" onclick="toggleView()">&#x2630; bars</div>
+				<div class="btn" id="sort_toggle" onclick="toggleSort()">&#x2195; fixed</div>
+			</div>
+			<div class="view-hint">try: &#x2630; bars or &#x2195; sorted to see the distribution differently</div>
+			<div id="info_text" style="margin-top:12px">
+				50 people start with <b style="color:#ddd">equal</b> wealth.<br>
+				Each round, a random pair flips a coin and trades.<br>
+				Watch the wealth distribution emerge.
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 50 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>
+<script>
+// Speed up for more people
+SPEED = 300;
+</script>

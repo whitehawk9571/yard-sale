@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head><style>
+body { margin:0; background:transparent; overflow:hidden; }
+canvas { display:block; }
+</style></head>
+<body>
+<canvas id="c" width="600" height="200"></canvas>
+<script>
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var dpr = window.devicePixelRatio || 1;
+var W = c.width, H = c.height;
+c.style.width = W + "px";
+c.style.height = H + "px";
+c.width = W * dpr;
+c.height = H * dpr;
+ctx.scale(dpr, dpr);
+
+function draw() {
+	ctx.clearRect(0,0,W,H);
+
+	var people = [
+		{x: W*0.3, color: "#5dadec", dark: "#3a7cbf", label: "Alice", wealth: 100},
+		{x: W*0.7, color: "#e8b84b", dark: "#b8892a", label: "Bob", wealth: 100}
+	];
+
+	for (var i = 0; i < people.length; i++) {
+		var p = people[i];
+		var x = p.x, y = 60;
+
+		// Head
+		ctx.fillStyle = p.color;
+		ctx.beginPath(); ctx.arc(x, y-18, 18, 0, Math.PI*2); ctx.fill();
+		// Body
+		ctx.fillRect(x-13, y+2, 26, 30);
+		ctx.beginPath(); ctx.arc(x, y+32, 13, 0, Math.PI); ctx.fill();
+		// Eyes
+		ctx.fillStyle = "#fff";
+		ctx.beginPath(); ctx.arc(x-5, y-21, 4, 0, Math.PI*2); ctx.fill();
+		ctx.beginPath(); ctx.arc(x+5, y-21, 4, 0, Math.PI*2); ctx.fill();
+		ctx.fillStyle = "#333";
+		ctx.beginPath(); ctx.arc(x-4, y-20, 1.8, 0, Math.PI*2); ctx.fill();
+		ctx.beginPath(); ctx.arc(x+6, y-20, 1.8, 0, Math.PI*2); ctx.fill();
+		// Smile
+		ctx.strokeStyle = "#333"; ctx.lineWidth = 2; ctx.beginPath();
+		ctx.arc(x, y-10, 6, 0.3, Math.PI-0.3); ctx.stroke();
+		// Label
+		ctx.fillStyle = "#555"; ctx.font = "bold 13px sans-serif"; ctx.textAlign = "center";
+		ctx.fillText(p.label, x, y-42);
+
+		// Bar
+		var barW = 80, barH = 60, barTop = 110;
+		var fill = (p.wealth / 200) * barH;
+		ctx.fillStyle = "#1a1a1a";
+		ctx.fillRect(x-barW/2, barTop, barW, barH);
+		ctx.fillStyle = p.dark;
+		ctx.fillRect(x-barW/2, barTop+barH-fill, barW, fill);
+		ctx.strokeStyle = "#444"; ctx.lineWidth = 1;
+		ctx.strokeRect(x-barW/2, barTop, barW, barH);
+
+		ctx.fillStyle = "#333"; ctx.font = "bold 16px sans-serif";
+		ctx.fillText("$" + p.wealth, x, barTop + barH + 20);
+	}
+
+	// Equals sign
+	ctx.fillStyle = "#666"; ctx.font = "bold 30px sans-serif"; ctx.textAlign = "center";
+	ctx.fillText("=", W/2, 130);
+}
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+<head>
+
+	<title>The Folly of Fairness - a playable post on wealth inequality</title>
+	<meta name="description" content="A playable post on how fair trades can make an unfair world." />
+	<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+	<meta itemprop="name" content="The Folly of Fairness">
+	<meta itemprop="description" content="A playable post on how fair trades can make an unfair world.">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="The Folly of Fairness">
+	<meta name="twitter:description" content="A playable post on how fair trades can make an unfair world.">
+
+	<meta property="og:title" content="The Folly of Fairness">
+	<meta property="og:type" content="website">
+	<meta property="og:description" content="A playable post on how fair trades can make an unfair world.">
+
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+	<!-- SPLASH -->
+	<div id="intro_container">
+		<div id="intro">
+			<iframe src="play/intro/intro.html" id="intro_background" scrolling="no"></iframe>
+		</div>
+	</div>
+
+	<!-- CHAPTER 1: INTRO -->
+	<div class="chapter">
+
+		<p><strong>This is a story of how fair rules can create an unfair world.</strong></p>
+		<p>
+			Meet Alice and Bob. They each start with $100.
+			They're about to play a simple game &mdash;
+			just flipping a coin.
+		</p>
+
+		<iframe playable src="play/mini/mini_equal.html" width="600" height="200" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+
+		<p>
+			Here are the rules. Each round, they flip a coin.
+			The <b>stake</b> is always a percentage of the <i>poorer</i> person's wealth:
+		</p>
+
+		<iframe playable src="play/mini/mini_expected.html" width="730" height="200" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+
+		<p>
+			Those rates aren't arbitrary: 20% up and 16.67% down is the exact balance
+			point where, on average, a fair fraction moves back and forth between them.
+			Seems fair, right?
+		</p>
+		<p>
+			Well...
+		</p>
+		<div class="instruction">
+			click the coin a bunch of times and find out:
+		</div>
+
+	</div>
+
+	<!-- PLAYABLE: MANUAL TWO-PERSON -->
+	<div class="playable">
+		<iframe playable src="play/manual/manual.html" width="550" height="550"></iframe>
+	</div>
+
+	<!-- CHAPTER 2: WHAT HAPPENED -->
+	<div class="chapter">
+		<p>
+			Huh. Even though the game looks balanced,
+			it always eventually ends up with a huge gap.
+		</p>
+		<p>
+			Was that just bad luck? Let's speed things up and see what happens
+			over <i>hundreds</i> of flips.
+		</p>
+		<div class="instruction">
+			hit play and run the simulation a few times:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: AUTO TWO-PERSON -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_two.html" style="position:relative;left:10px" width="1050" height="480"></iframe>
+	</div>
+
+	<!-- CHAPTER 3: WHY -->
+	<div class="chapter">
+		<p>
+			Every time, there's almost always a large disparity.
+			But how? The rules are supposed to be balanced!
+		</p>
+		<p>
+			Here's the trick: when you're poor, even a small loss is a <b>huge percentage</b> of what you have.
+			Losing $20 when you have $100 is devastating.
+			Losing $20 when you have $900? Barely a dent.
+		</p>
+		<p>
+			This is called <b>multiplicative dynamics</b>.
+			In a game where bets are proportional to your wealth,
+			the math of <i>percentages</i> beats the math of <i>expected value</i>.
+			The rich can absorb losses; the poor can't.
+		</p>
+		<p>
+			<strong>And this isn't just two people. Watch what happens with a whole society.</strong>
+		</p>
+		<div class="instruction">
+			50 people, all starting equal. hit play:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: MULTI-PERSON -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_multi.html" style="position:relative;left:10px" width="1050" height="560"></iframe>
+	</div>
+
+	<!-- CHAPTER 4: THE RESULT -->
+	<div class="chapter">
+		<p>
+			Starting from <i>perfect</i> equality, with <i>fair</i> coin flips,
+			you get a handful of people with almost all the wealth
+			and everyone else with almost nothing.
+		</p>
+		<p>
+			The inequality score (where 0% = everyone equal, 100% = one person has everything)
+			climbs relentlessly toward 100%.
+		</p>
+		<p>
+			<b>Fair rules + random luck = unfair outcomes.</b>
+			<br>
+		</p>
+		<p>
+			But here's the hopeful part: <b>we can fix it.</b>
+		</p>
+	</div>
+
+	<!-- CHAPTER 5: FIX IT - LOSS FRACTION -->
+	<div class="chapter">
+		<p>
+			One idea: what if we change the rules so the poorer person loses <i>even less</i> on a bad flip?
+			Like, what if instead of losing 16.67%, they only lost 15%? Or 10%?
+		</p>
+		<div class="instruction">
+			try lowering the loss fraction:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: FIX - LOSS SLIDER -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_fix.html" style="position:relative;left:10px" width="1050" height="560"></iframe>
+	</div>
+
+	<!-- CHAPTER 6: IT WORKS, BUT... -->
+	<div class="chapter">
+		<p>
+			Interesting! The default 16.67% is essentially balanced &mdash;
+			(technically 16.6 repeating, i.e. 1/6, is the exact break-even point) &mdash;
+			and at that level, inequality still explodes.
+			But drop the loss to around <b>15%</b>, and suddenly inequality <i>does</i> stay flat.
+			A mild tilt toward the poor is enough to overcome multiplicative dynamics.
+		</p>
+		<p>
+			So this <i>is</i> a real solution! The catch: in the real world,
+			telling people "you have to lose 5% less than you fairly should
+			whenever you're the poorer party in a trade" is... a tough sell.
+			It requires rewriting the rules of every transaction in the economy,
+			which isn't exactly practical.
+		</p>
+		<p>
+			There's another approach that's a lot more direct:
+			<b>redistribution.</b>
+		</p>
+		<p>
+			What if we leave the trade rules alone,
+			and just have everyone chip in a tiny wealth tax
+			that gets split equally among everyone?
+			In this sim, the tax is collected <i>every N flips</i>
+			(where N is the number of people &mdash; so every 50 flips with 50 people).
+			That way, on average, each person participates in two trades between tax rounds
+			(since every flip involves two people).
+		</p>
+		<div class="instruction">
+			try adding a wealth tax. even a tiny one:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: FIX - WEALTH TAX -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_tax.html" style="position:relative;left:10px" width="1050" height="560"></iframe>
+	</div>
+
+	<!-- CHAPTER 7: IT WORKS -->
+	<div class="chapter">
+		<p>
+			Whoa. Even a <i>tiny</i> wealth tax completely changes the outcome.
+			Instead of one person ending up with everything,
+			the wealth distribution stays relatively flat.
+			The inequality score stabilizes instead of climbing to 100%.
+		</p>
+		<p>
+			The key insight: <b>redistribution counteracts multiplicative dynamics directly.</b>
+			A small flow of wealth from the top back to the bottom
+			is enough to prevent runaway concentration &mdash;
+			without having to radically rewrite the trade rules themselves.
+		</p>
+		<p>
+			But wait &mdash; what about the real world?
+			We don't start from a clean slate.
+			Inequality <i>already exists</i>. Can a wealth tax fix it even after the damage is done?
+		</p>
+		<div class="instruction">
+			the world starts with extreme inequality. try adding a wealth tax:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: FIX EXISTING INEQUALITY -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_fix_unequal.html" style="position:relative;left:10px" width="1050" height="560"></iframe>
+	</div>
+
+	<!-- CHAPTER: YES IT WORKS -->
+	<div class="chapter">
+		<p>
+			Yes! Even starting from extreme inequality, the wealth tax
+			gradually pulls things back toward a more equal distribution.
+			It doesn't happen instantly &mdash; but given enough time,
+			redistribution overcomes the initial imbalance.
+		</p>
+		<p>
+			<b>The past doesn't have to haunt the present.</b>
+			The same small mechanism that prevents inequality from forming
+			can also <i>undo</i> inequality that already exists.
+		</p>
+		<div class="instruction">
+			now, here's a sandbox where you can play with everything:
+		</div>
+	</div>
+
+	<!-- PLAYABLE: SANDBOX -->
+	<div class="playable">
+		<iframe playable src="play/automatic/auto_sandbox.html" style="position:relative;left:10px" width="1050" height="600"></iframe>
+	</div>
+
+	<!-- CHAPTER: WRAP UP -->
+	<div class="chapter">
+		<div class="instruction" style="font-size:50px; line-height:50px">
+			WRAPPING UP:
+		</div>
+		<p>
+			<b>1. Fair rules can create unfair worlds.</b>
+			<br>
+			You don't need cheating, corruption, or conspiracy to get extreme inequality.
+			Just random luck + multiplicative dynamics is enough.
+		</p>
+		<p>
+			<b>2. Inequality isn't (just) about bad actors.</b>
+			<br>
+			The <i>structure</i> of the system matters as much as individual behavior.
+			Even a perfectly balanced game still concentrates wealth at the top.
+		</p>
+		<p>
+			<b>3. Small redistribution makes a big difference.</b>
+			<br>
+			A tiny wealth tax &mdash; barely noticeable to individuals &mdash;
+			is enough to prevent runaway inequality.
+			The math that concentrates wealth can be counteracted
+			by a small, steady flow back to the bottom.
+		</p>
+	</div>
+
+	<!-- REFERENCES -->
+	<div style="width: 100%; background: #222; overflow: hidden; color:#ddd">
+		<div class="chapter">
+			<div class="instruction">
+				Thanks for playing!
+			</div>
+			<br>
+			<div style="font-size:16px; line-height:18px">
+
+				This interactive explainer is based on the <b>Yard Sale Model</b>
+				of wealth concentration, studied by physicist Bruce Boghosian
+				and others. The key paper is
+				<a target="_blank" href="https://www.scientificamerican.com/article/is-inequality-inevitable/">
+				"Is Inequality Inevitable?" (Scientific American, 2019)</a>.
+
+				<br><br>
+
+				The model shows that even with fair or slightly progressive rules,
+				multiplicative dynamics inevitably concentrate wealth &mdash;
+				unless counteracted by redistribution mechanisms.
+				For a deeper mathematical treatment, see Boghosian's
+				<a target="_blank" href="https://arxiv.org/abs/1404.0721">
+				"Kinetics of wealth and the Pareto law" (2014)</a>.
+
+				<br><br>
+
+				The format of this "playable post" was directly inspired by
+				Nicky Case and Vi Hart's
+				<a target="_blank" href="https://ncase.me/polygons/">
+				Parable of the Polygons</a>,
+				which uses the same interactive storytelling approach
+				to explain segregation dynamics.
+
+				<br><br>
+
+				Nicky Case has created many other wonderful explorable explanations at
+				<a target="_blank" href="https://ncase.me/">ncase.me</a>,
+				including
+				<a target="_blank" href="https://ncase.me/trust/">The Evolution of Trust</a>
+				and
+				<a target="_blank" href="https://ncase.me/loopy/">Loopy</a>.
+
+				<br><br>
+				<div style="border-bottom: 2px dashed #666"></div>
+
+				<span style="font-size:18px; line-height:22px">
+					<br>
+					<b>Further Reading:</b><br>
+					<a target="_blank" href="https://en.wikipedia.org/wiki/Gini_coefficient">Gini Coefficient</a> &mdash; the inequality metric behind the score used in the simulations<br>
+					<a target="_blank" href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a> &mdash; the wealth distribution that naturally emerges<br>
+					<a target="_blank" href="https://pudding.cool/2017/01/making-it-big/">The Pudding: Making It Big</a> &mdash; another great interactive on inequality
+				</span>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script src="js/Mouse.js"></script>
+<script src="js/intro.js"></script>
+
+</html>

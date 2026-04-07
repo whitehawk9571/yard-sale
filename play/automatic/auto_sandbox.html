@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+	<title>Yard Sale - Sandbox</title>
+	<link href="automatic.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<div id="main_area">
+			<canvas id="canvas" width="600" height="500"></canvas>
+		</div>
+		<div id="stats">
+			<canvas id="stats_canvas" width="400" height="200"></canvas>
+			<div id="stats_text"></div>
+			<div>
+				<div class="btn" id="moving" onclick="START_SIM=!START_SIM; updateButtons()">&#x25B6; play</div>
+				<div class="btn" id="reset_btn" onclick="reset()">&#x21BB; reset</div>
+				<div class="btn" id="view_toggle" onclick="toggleView()">&#x2630; bars</div>
+				<div class="btn" id="sort_toggle" onclick="toggleSort()">&#x2195; fixed</div>
+			</div>
+			<div class="view-hint">try: &#x2630; bars or &#x2195; sorted to see the distribution differently</div>
+			<div id="controls">
+				<div class="slider-row">
+					<label>Loss fraction:</label>
+					<input type="range" id="sl_lose" min="0.1" max="30" value="16.67" step="0.1" oninput="sliderChanged('lose')">
+					<input class="val" id="val_lose" value="16.67%" onchange="typedVal('lose')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row">
+					<label>Win fraction:</label>
+					<input type="range" id="sl_win" min="0.1" max="50" value="20" step="0.1" oninput="sliderChanged('win')">
+					<input class="val" id="val_win" value="20%" onchange="typedVal('win')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row">
+					<label>Wealth tax:</label>
+					<input type="range" id="sl_tax" min="0" max="10" value="0" step="0.1" oninput="sliderChanged('tax')">
+					<input class="val" id="val_tax" value="0%" onchange="typedVal('tax')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row">
+					<label>People:</label>
+					<input type="range" id="sl_people" min="2" max="100" value="50" step="1" oninput="sliderChanged('people')">
+					<input class="val" id="val_people" value="50" onchange="typedVal('people')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row">
+					<label>Starting inequality:</label>
+					<input type="range" id="sl_ineq" min="0" max="100" value="0" step="1" oninput="sliderChanged('ineq')">
+					<input class="val" id="val_ineq" value="0%" onchange="typedVal('ineq')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+				<div class="slider-row">
+					<label>Speed:</label>
+					<input type="range" id="sl_speed" min="1" max="2000" value="300" step="1" oninput="sliderChanged('speed')">
+					<input class="val" id="val_speed" value="300/s" onchange="typedVal('speed')" onkeydown="if(event.key==='Enter')this.blur()">
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+window.SIM_CONFIG = { numPeople: 50, wealthTax: 0 };
+</script>
+<script src="../lib/Mouse.js"></script>
+<script src="automatic.js"></script>
+<script>
+SPEED = 300;
+
+// Format a number: drop trailing zeros but keep up to 4 decimal places
+function fmtNum(n) {
+	if (n === Math.floor(n)) return n.toFixed(0);
+	var s = n.toFixed(4);
+	return s.replace(/0+$/, "").replace(/\.$/, "");
+}
+
+function syncDisplay(which) {
+	if (!which || which === "lose") document.getElementById("val_lose").value = fmtNum(LOSE_FRACTION * 100) + "%";
+	if (!which || which === "win") document.getElementById("val_win").value = fmtNum(WIN_FRACTION * 100) + "%";
+	if (!which || which === "tax") document.getElementById("val_tax").value = fmtNum(WEALTH_TAX * 100) + "%";
+	if (!which || which === "people") document.getElementById("val_people").value = NUM_PEOPLE;
+	if (!which || which === "ineq") document.getElementById("val_ineq").value = STARTING_INEQUALITY + "%";
+	if (!which || which === "speed") document.getElementById("val_speed").value = SPEED + "/s";
+}
+
+function sliderChanged(which) {
+	if (which === "lose") {
+		LOSE_FRACTION = parseFloat(document.getElementById("sl_lose").value) / 100;
+	} else if (which === "win") {
+		WIN_FRACTION = parseFloat(document.getElementById("sl_win").value) / 100;
+	} else if (which === "tax") {
+		WEALTH_TAX = parseFloat(document.getElementById("sl_tax").value) / 100;
+	} else if (which === "people") {
+		var peopleVal = parseInt(document.getElementById("sl_people").value);
+		if (peopleVal !== NUM_PEOPLE) {
+			NUM_PEOPLE = peopleVal;
+			SHOW_BAR_CHART = NUM_PEOPLE > 2;
+			reset();
+		}
+	} else if (which === "ineq") {
+		STARTING_INEQUALITY = parseInt(document.getElementById("sl_ineq").value);
+		reset();
+	} else if (which === "speed") {
+		SPEED = parseInt(document.getElementById("sl_speed").value);
+	}
+	syncDisplay(which);
+}
+
+function typedVal(which) {
+	var raw = document.getElementById("val_" + which).value;
+	var num = parseFloat(raw);
+	if (isNaN(num)) { syncDisplay(which); return; }
+
+	if (which === "lose") {
+		num = Math.max(0.01, Math.min(50, num));
+		LOSE_FRACTION = num / 100;
+		document.getElementById("sl_lose").value = num;
+	} else if (which === "win") {
+		num = Math.max(0.01, Math.min(50, num));
+		WIN_FRACTION = num / 100;
+		document.getElementById("sl_win").value = num;
+	} else if (which === "tax") {
+		num = Math.max(0, Math.min(10, num));
+		WEALTH_TAX = num / 100;
+		document.getElementById("sl_tax").value = num;
+	} else if (which === "people") {
+		num = Math.max(2, Math.min(200, Math.round(num)));
+		NUM_PEOPLE = num;
+		SHOW_BAR_CHART = NUM_PEOPLE > 2;
+		document.getElementById("sl_people").value = Math.min(num, 100);
+		reset();
+	} else if (which === "ineq") {
+		num = Math.max(0, Math.min(100, Math.round(num)));
+		STARTING_INEQUALITY = num;
+		document.getElementById("sl_ineq").value = num;
+		reset();
+	} else if (which === "speed") {
+		num = Math.max(1, Math.min(100000, Math.round(num)));
+		SPEED = num;
+		document.getElementById("sl_speed").value = Math.min(num, 2000);
+	}
+	syncDisplay(which);
+}
+</script>

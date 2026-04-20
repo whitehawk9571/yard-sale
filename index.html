@@ -46,15 +46,21 @@
 			The <b>stake</b> is always a percentage of the <i>poorer</i> person's wealth:
 		</p>
 
-		<iframe playable src="play/mini/mini_expected.html" width="730" height="200" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+		<iframe playable src="play/mini/mini_expected.html" width="730" height="140" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
 
 		<p>
-			Those rates aren't arbitrary: 20% up and 16.67% down is the exact balance
-			point where, on average, a fair fraction moves back and forth between them.
-			Seems fair, right?
+			Those rates aren't arbitrary &mdash; 20% up and 16.67% down are <b>exactly balanced</b>.
+			If the coin flips perfectly alternated H, T, H, T, wealth would never change at all:
+		</p>
+
+		<iframe playable src="play/mini/mini_balanced.html" width="730" height="280" scrolling="no" style="margin:0 auto;display:block" embedded></iframe>
+
+		<p>
+			(Side note: if both players happen to have <i>exactly</i> the same amount of money,
+			the sim picks a random one to gain or lose. So it really is symmetric.)
 		</p>
 		<p>
-			Well...
+			Seems fair, right? Well...
 		</p>
 		<div class="instruction">
 			click the coin a bunch of times and find out:
@@ -103,6 +109,17 @@
 			In a game where bets are proportional to your wealth,
 			the math of <i>percentages</i> beats the math of <i>expected value</i>.
 			The rich can absorb losses; the poor can't.
+		</p>
+		<p>
+			To be clear: the sim <i>does</i> let the poor and rich swap places.
+			Watch the two-person auto sim long enough and you'll see
+			the leader change several times &mdash;
+			sometimes Alice is on top, sometimes Bob.
+			The point isn't that one specific person stays rich forever.
+			It's that <b>there is almost always a large gap</b> between
+			whoever is currently on top and whoever is on the bottom.
+			Someone always ends up rich, and someone always ends up poor,
+			even when the rules are identical for both.
 		</p>
 		<p>
 			<strong>And this isn't just two people. Watch what happens with a whole society.</strong>
@@ -253,7 +270,8 @@
 			<b>1. Fair rules can create unfair worlds.</b>
 			<br>
 			You don't need cheating, corruption, or conspiracy to get extreme inequality.
-			Just random luck + multiplicative dynamics is enough.
+			<br/>
+			(not to say that isn't happening, but that's a topic for another time)
 		</p>
 		<p>
 			<b>2. Inequality isn't (just) about bad actors.</b>
@@ -264,10 +282,37 @@
 		<p>
 			<b>3. Small redistribution makes a big difference.</b>
 			<br>
-			A tiny wealth tax &mdash; barely noticeable to individuals &mdash;
-			is enough to prevent runaway inequality.
-			The math that concentrates wealth can be counteracted
-			by a small, steady flow back to the bottom.
+			Even a tiny wealth tax is enough to prevent runaway inequality!
+		</p>
+	</div>
+
+	<!-- WHAT CAN YOU DO -->
+	<div class="chapter">
+		<div class="instruction" style="font-size:50px; line-height:50px">
+			WHAT CAN YOU DO?
+		</div>
+		<p>
+			No one person can fix systemic inequality alone.
+			But understanding how it works is the first step.
+			Here's what you can do:
+		</p>
+		<p>
+			<b>1. Spread the word.</b>
+			<br>
+			Share this page and inform other people of this issue. Again, we can't do anything alone!
+		</p>
+		<p>
+			<b>2. Advocate for progressive taxation.</b>
+			<br>
+			The simulations show that even a tiny wealth tax
+			dramatically flattens runaway concentration. So, vote for policymakers that support wealth taxes or more progressive income taxes!
+		</p>
+		<p>
+			<b>3. Remember: it's fixable.</b>
+			<br>
+			The same principles that show inequality is inevitable <i>also</i> show
+			it's reversible. We don't need to change everything.
+			Just a little redistribution is enough. The hard part are the politics.
 		</p>
 	</div>
 
@@ -294,6 +339,8 @@
 				Parable of the Polygons</a>,
 				which uses the same interactive storytelling approach
 				to explain segregation dynamics.
+				<br/>
+				(in fact you may notice this website looks extremely similar. that's because I started from theirs!)
 
 				<br><br>
 
@@ -302,7 +349,7 @@
 				including
 				<a target="_blank" href="https://ncase.me/trust/">The Evolution of Trust</a>
 				and
-				<a target="_blank" href="https://ncase.me/loopy/">Loopy</a>.
+				<a target="_blank" href="https://ncase.itch.io/wbwwb">We Become What We Behold</a>.
 
 				<br><br>
 				<div style="border-bottom: 2px dashed #666"></div>
@@ -312,7 +359,6 @@
 					<b>Further Reading:</b><br>
 					<a target="_blank" href="https://en.wikipedia.org/wiki/Gini_coefficient">Gini Coefficient</a> &mdash; the inequality metric behind the score used in the simulations<br>
 					<a target="_blank" href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a> &mdash; the wealth distribution that naturally emerges<br>
-					<a target="_blank" href="https://pudding.cool/2017/01/making-it-big/">The Pudding: Making It Big</a> &mdash; another great interactive on inequality
 				</span>
 			</div>
 		</div>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head><style>
+body { margin:0; background:transparent; overflow:hidden; }
+canvas { display:block; }
+</style></head>
+<body>
+<canvas id="c" width="730" height="280"></canvas>
+<script>
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var dpr = window.devicePixelRatio || 1;
+var W = c.width, H = c.height;
+c.style.width = W + "px";
+c.style.height = H + "px";
+c.width = W * dpr;
+c.height = H * dpr;
+ctx.scale(dpr, dpr);
+
+function drawCoin(x, y, r, isGold, label) {
+	ctx.fillStyle = isGold ? "#f4d03f" : "#b8b8b8";
+	ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+	ctx.strokeStyle = isGold ? "#d4a017" : "#888"; ctx.lineWidth = 2; ctx.stroke();
+	ctx.fillStyle = isGold ? "#9a7209" : "#555";
+	ctx.font = "bold " + Math.round(r*0.95) + "px sans-serif";
+	ctx.textAlign = "center"; ctx.textBaseline = "middle";
+	ctx.fillText(label, x, y + 1);
+}
+
+function drawArrow(x1, y, x2) {
+	ctx.strokeStyle = "#666"; ctx.lineWidth = 2;
+	ctx.beginPath();
+	ctx.moveTo(x1, y);
+	ctx.lineTo(x2, y);
+	ctx.moveTo(x2 - 8, y - 6);
+	ctx.lineTo(x2, y);
+	ctx.lineTo(x2 - 8, y + 6);
+	ctx.stroke();
+}
+
+function drawDiagram(values, coins, centerY) {
+	var n = values.length;
+	var leftPad = 40, rightPad = 40;
+	var spacing = (W - leftPad - rightPad) / (n - 1);
+	var coinY = centerY - 32;
+
+	// Arrows + coins + deltas
+	for (var i = 0; i < n - 1; i++) {
+		var xa = leftPad + spacing * i;
+		var xb = leftPad + spacing * (i + 1);
+		drawArrow(xa + 32, centerY, xb - 32);
+		var midX = (xa + xb) / 2;
+		drawCoin(midX, coinY, 14, coins[i], coins[i] ? "H" : "T");
+		ctx.fillStyle = coins[i] ? "#2a8c2a" : "#c44";
+		ctx.font = "bold 11px sans-serif";
+		ctx.textAlign = "center"; ctx.textBaseline = "top";
+		ctx.fillText(coins[i] ? "+20%" : "-16.67%", midX, centerY + 10);
+	}
+
+	// Values
+	for (var i = 0; i < n; i++) {
+		var x = leftPad + spacing * i;
+		ctx.fillStyle = "#333";
+		ctx.font = "bold 18px sans-serif";
+		ctx.textAlign = "center"; ctx.textBaseline = "middle";
+		ctx.fillText(values[i], x, centerY);
+	}
+}
+
+function draw() {
+	ctx.clearRect(0, 0, W, H);
+
+	// Title
+	ctx.fillStyle = "#333";
+	ctx.font = "bold 15px sans-serif";
+	ctx.textAlign = "center"; ctx.textBaseline = "top";
+	ctx.fillText("If flips perfectly alternated, wealth would always return to $100 no matter which came first:", W/2, 8);
+
+	// Diagram 1: starts with H
+	drawDiagram(
+		["$100", "$120", "$100", "$120", "$100"],
+		[true, false, true, false],
+		90
+	);
+
+	// Diagram 2: starts with T
+	drawDiagram(
+		["$100", "$83.33", "$100", "$83.33", "$100"],
+		[false, true, false, true],
+		200
+	);
+
+	// Bottom text
+	ctx.fillStyle = "#2a8c2a";
+	ctx.font = "bold 14px sans-serif";
+	ctx.textAlign = "center"; ctx.textBaseline = "bottom";
+	ctx.fillText("After every H+T (or T+H) pair: back to $100. The rates are exactly balanced.", W/2, H - 8);
+}
+draw();
+</script>
+</body>
+</html>

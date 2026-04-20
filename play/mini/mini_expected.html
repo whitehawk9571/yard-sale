@@ -5,7 +5,7 @@ body { margin:0; background:transparent; overflow:hidden; }
 canvas { display:block; }
 </style></head>
 <body>
-<canvas id="c" width="730" height="200"></canvas>
+<canvas id="c" width="730" height="140"></canvas>
 <script>
 var c = document.getElementById("c");
 var ctx = c.getContext("2d");
@@ -50,11 +50,6 @@ function draw() {
 	ctx.fillStyle = "#555"; ctx.font = "14px sans-serif";
 	ctx.fillText("of their wealth", cx+220, 112);
 
-	// Bottom summary
-	ctx.fillStyle = "#333"; ctx.font = "bold 15px sans-serif"; ctx.textBaseline = "top";
-	ctx.fillText("These rates are mathematically balanced: 1.20 \u00D7 0.8333... = 1.0", cx, 155);
-	ctx.fillStyle = "#555"; ctx.font = "13px sans-serif";
-	ctx.fillText("On average, the poorer person's wealth multiplier is exactly 1 per flip.", cx, 178);
 }
 draw();
 </script>

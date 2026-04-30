@@ -74,18 +74,18 @@ function draw() {
 	ctx.fillStyle = "#333";
 	ctx.font = "bold 15px sans-serif";
 	ctx.textAlign = "center"; ctx.textBaseline = "top";
-	ctx.fillText("If flips perfectly alternated, wealth would always return to $100 no matter which came first:", W/2, 8);
+	ctx.fillText("Tracking the poorer person (starting at $50): wealth always returns to $50 no matter which came first:", W/2, 8);
 
 	// Diagram 1: starts with H
 	drawDiagram(
-		["$100", "$120", "$100", "$120", "$100"],
+		["$50", "$60", "$50", "$60", "$50"],
 		[true, false, true, false],
 		90
 	);
 
 	// Diagram 2: starts with T
 	drawDiagram(
-		["$100", "$83.33", "$100", "$83.33", "$100"],
+		["$50", "$41.67", "$50", "$41.67", "$50"],
 		[false, true, false, true],
 		200
 	);
@@ -94,7 +94,7 @@ function draw() {
 	ctx.fillStyle = "#2a8c2a";
 	ctx.font = "bold 14px sans-serif";
 	ctx.textAlign = "center"; ctx.textBaseline = "bottom";
-	ctx.fillText("After every H+T (or T+H) pair: back to $100. The rates are exactly balanced.", W/2, H - 8);
+	ctx.fillText("After every H+T (or T+H) pair: back to $50. The rates are exactly balanced.", W/2, H - 8);
 }
 draw();
 </script>
